@@ -11,17 +11,17 @@ public class Main {
     public static void main(String[] args) {
         ExecutorService service = Executors.newFixedThreadPool(3);
 
-
+        GodObject magic = new GodObject();
         for (int i = 0; i < 91; i++) {
-            service.submit(new GetBattles(i, GameMode.Arcade, GameType.Random, Vehicles.Tank));
-            service.submit(new GetBattles(i, GameMode.Arcade, GameType.Random, Vehicles.Aircraft));
-            service.submit(new GetBattles(i, GameMode.Arcade, GameType.Random, Vehicles.TanksAndPlanes));
-            service.submit(new GetBattles(i, GameMode.Realistic, GameType.Random, Vehicles.Tank));
-            service.submit(new GetBattles(i, GameMode.Realistic, GameType.Random, Vehicles.Aircraft));
-            service.submit(new GetBattles(i, GameMode.Realistic, GameType.Random, Vehicles.TanksAndPlanes));
-           /* service.submit(new GetBattles(i, GameMode.Simulation, GameType.Random, Vehicles.Tank));
-            service.submit(new GetBattles(i, GameMode.Simulation, GameType.Random, Vehicles.Aircraft));
-            service.submit(new GetBattles(i, GameMode.Simulation, GameType.Random, Vehicles.TanksAndPlanes));*/
+            service.submit(new GetBattles(magic, i, GameMode.Arcade, GameType.Random, Vehicles.Tank));
+            service.submit(new GetBattles(magic, i, GameMode.Arcade, GameType.Random, Vehicles.Aircraft));
+            service.submit(new GetBattles(magic, i, GameMode.Arcade, GameType.Random, Vehicles.TanksAndPlanes));
+            service.submit(new GetBattles(magic, i, GameMode.Realistic, GameType.Random, Vehicles.Tank));
+            service.submit(new GetBattles(magic, i, GameMode.Realistic, GameType.Random, Vehicles.Aircraft));
+            service.submit(new GetBattles(magic, i, GameMode.Realistic, GameType.Random, Vehicles.TanksAndPlanes));
+//            service.submit(new GetBattles(magic, i, GameMode.Simulation, GameType.Random, Vehicles.Tank));
+//            service.submit(new GetBattles(magic, i, GameMode.Simulation, GameType.Random, Vehicles.Aircraft));
+//            service.submit(new GetBattles(magic, i, GameMode.Simulation, GameType.Random, Vehicles.TanksAndPlanes));
         }
 
 

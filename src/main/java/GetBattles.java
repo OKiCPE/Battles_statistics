@@ -19,12 +19,14 @@ public class GetBattles implements Runnable {
     private GameMode gameMode;
     private GameType gameType;
     private Vehicles vehicles;
+    private GodObject magic;
 
-    GetBattles(int pageNumber, GameMode gameMode, GameType gameType, Vehicles vehicles) {
+    GetBattles(GodObject magic, int pageNumber, GameMode gameMode, GameType gameType, Vehicles vehicles) {
         this.pageNumber = pageNumber;
         this.gameMode = gameMode;
         this.gameType = gameType;
         this.vehicles = vehicles;
+        this.magic = magic;
     }
 
     private void setCookies() {
@@ -77,7 +79,7 @@ public class GetBattles implements Runnable {
         Document doc = get.execute().parse();
         Elements replays = doc.select("a[class=replay__item]");
         for (Element replay : replays) {
-            ReplayParser parser = new ReplayParser(replay);
+            ReplayParser parser = new ReplayParser(gameMode, magic, replay);
             Thread thread = new Thread(parser);
             thread.start();
             try {
@@ -90,6 +92,17 @@ public class GetBattles implements Runnable {
 
     @Override
     public void run() {
+        /*switch (gameMode) {
+            case Arcade:
+                if (magic.isStopGetArcadeBattles()) return;
+                break;
+            case Realistic:
+                if (magic.isStopGetRealisticBattles()) return;
+                break;
+            case Simulation:
+                if (magic.isStopGetSimulatorBattles()) return;
+                break;
+        }*/
         setCookies();
         try {
             open();

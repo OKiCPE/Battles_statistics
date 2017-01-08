@@ -1,3 +1,3 @@
 public enum GameMode {
-    Arcade, Simulation, Realistic
+    Arcade, Simulation, Realistic, N
 }

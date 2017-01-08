@@ -15,7 +15,6 @@ import java.util.Locale;
 public class ReplayParser implements Runnable {
     private static final Logger log = LogManager.getLogger(ReplayParser.class);
     Element element;
-    private long id;
     Battle battle;
     GameType gameType;
     GameMode gameMode;
@@ -30,9 +29,13 @@ public class ReplayParser implements Runnable {
     Time duration;
     Date parced;
     boolean isExist;
+    GodObject magic;
+    private long id;
 
-    ReplayParser(Element element) {
+    ReplayParser(GameMode gameMode, GodObject magic, Element element) {
         this.element = element;
+        this.magic = magic;
+        this.gameMode = gameMode;
     }
 
     @Override
@@ -49,9 +52,22 @@ public class ReplayParser implements Runnable {
         query.setParameter("battleId", battleId);
         list = query.getResultList();
         if (list.isEmpty()) {
-
         } else {
             isExist = true;
+            switch (gameMode) {
+                case Arcade:
+                    magic.setStopGetArcadeBattles(true);
+                    //   log.error("arcade " + magic.isStopGetArcadeBattles());
+                    break;
+                case Realistic:
+                    magic.setStopGetRealisticBattles(true);
+                    // log.error("realistec " + magic.isStopGetRealisticBattles());
+                    break;
+                case Simulation:
+                    magic.setStopGetSimulatorBattles(true);
+                    // log.error(magic.isStopGetSimulatorBattles());
+                    break;
+            }
         }
 
         session.close();
@@ -114,10 +130,10 @@ public class ReplayParser implements Runnable {
                 case "Simulation battles":
                     battle.setGameMode(GameMode.Simulation);
                     break;
-               /* default:
+                default:
                     battle.setGameMode(GameMode.N);
                     log.error("Error set GameMode " + type);
-                    break;*/
+                    break;
             }
 
 

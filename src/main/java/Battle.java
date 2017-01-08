@@ -11,31 +11,31 @@ public class Battle implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private int id;
     @Column(name = "battle_id", unique = true, nullable = false)
-    long battleId;
+    private long battleId;
 
     @Column(columnDefinition = "TIME")
-    Time duration;
+    private Time duration;
     @Column
 
-    String mission;
+    private String mission;
     @Column
-    String map;
+    private String map;
     @Column(columnDefinition = "DATETIME")
-    Timestamp date;
+    private Timestamp date;
     @Enumerated(EnumType.STRING)
-    GameMode gameMode;
+    private GameMode gameMode;
     @Enumerated(EnumType.STRING)
-    GameType gameType;
+    private GameType gameType;
     @Enumerated(EnumType.STRING)
-    Vehicles vehicles;
+    private Vehicles vehicles;
 
     public String getMission() {
         return mission;
     }
 
-    public void setMission(String mission) {
+    void setMission(String mission) {
         this.mission = mission;
     }
 
