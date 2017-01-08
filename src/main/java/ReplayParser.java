@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ReplayParser implements Runnable {
     private static final Logger log = LogManager.getLogger(ReplayParser.class);
@@ -66,16 +67,14 @@ public class ReplayParser implements Runnable {
 
             battle.setMap(raw.substring(index + 2, raw.length()));
             String dateString = element.select("span[class=date__text]").text();
-            String[] ar = dateString.split(" ");
-            dateString = ar[0] + " " + "12" + " " + ar[2] + " " + ar[3];
-            SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy HH:mm");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.ENGLISH);
 
             try {
                 parced = formatter.parse(dateString);
                 java.sql.Timestamp sql = new java.sql.Timestamp(parced.getTime());
                 battle.setDate(sql);
             } catch (ParseException e) {
-                log.error("Parce error " + e);
+                log.error("Parse error " + e);
                 e.printStackTrace();
             }
 
@@ -112,7 +111,7 @@ public class ReplayParser implements Runnable {
                 case "Realistic battles":
                     battle.setGameMode(GameMode.Realistic);
                     break;
-               case "Simulation battles":
+                case "Simulation battles":
                     battle.setGameMode(GameMode.Simulation);
                     break;
                /* default:
